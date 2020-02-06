@@ -29,7 +29,7 @@ public class QueingEnpoint {
 	
 	@GetMapping("/")
 	public String welcome(){
-		return "Welcome to Ver Badminton Queing Application";
+		return "Welcome to Ver Badminton Queing Application.";
 	}
 	
 	@PutMapping("/createGame")
