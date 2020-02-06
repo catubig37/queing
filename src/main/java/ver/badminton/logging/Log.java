@@ -119,6 +119,7 @@ public abstract class Log {
 		this.title = "";
 		this.message = "";
 		this.jsonStr = "";
+		
 	}
 
 	public abstract void _log(String message);
