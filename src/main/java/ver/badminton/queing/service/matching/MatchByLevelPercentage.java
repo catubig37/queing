@@ -1,15 +1,11 @@
 package ver.badminton.queing.service.matching;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import ver.badminton.queing.helper.PlayerLevel;
 import ver.badminton.queing.model.Match;
 import ver.badminton.queing.model.Player;
-import ver.badminton.queing.service.matching.helper.MatchingUtil;
 
 public class MatchByLevelPercentage implements Matching{
 

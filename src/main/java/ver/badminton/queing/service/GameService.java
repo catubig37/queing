@@ -22,6 +22,7 @@ public class GameService {
 	
 	public Game createGame(Game game) {
 		JSONObject pgResponse = null;
+		String gameID = "-1";
 		try {
 			pgResponse = PG.Query(
 					String.format("INSERT INTO bad.\"Game\" (is_active, que_master, "
@@ -29,13 +30,14 @@ public class GameService {
 							+ "values("+ game.isActive() + ", '" + game.getQueMaster()+"', NOW(), NOW()) RETURNING *"),
 					new Object[] {})
 					.getJSONObject(0);
+			gameID = pgResponse.getString("game_id");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		if (pgResponse != null)
-			game.setGameId(pgResponse.getString("game_id"));
+			game.setGameId(gameID);
 		
 		return game;
 	}

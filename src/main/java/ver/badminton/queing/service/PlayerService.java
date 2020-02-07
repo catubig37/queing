@@ -18,6 +18,7 @@ import ver.postgres.PG;
 public class PlayerService {
 	public String createPlayer(Player p) {
 		JSONObject pgResponse = null;
+		String playerId = "-1";
 		try {
 			pgResponse = PG.Query(String.format(
 					"INSERT INTO bad.\"Player\" (alias, first_name, last_name, gender, player_level, priority_level)"
@@ -25,14 +26,15 @@ public class PlayerService {
 					new Object[] { p.getAlias(), p.getFirstName(), p.getLastName(), p.getGender(),
 							p.getLevel().getDesc(), p.getPriorityLevel().getDesc() })
 					.getJSONObject(0);
+			playerId = pgResponse.getString("player_id");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		if (pgResponse != null)
-			p.setPlayerId(pgResponse.getString("player_id"));
-		return pgResponse.getString("player_id");
+		
+		p.setPlayerId(null);
+		return playerId;
 	}
 	
 	public String addPlayer(String gameId, String playerId) {
