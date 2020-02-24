@@ -36,10 +36,20 @@ public class PG implements AutoCloseable {
 	private static void init_pg_pool(){
 
 		try {
-			URI dbUri = new URI(coalesce(
+			URI dbUri = null;
+			if("sit".equalsIgnoreCase(System.getenv("ENVIRONMENT"))) {
+				dbUri = new URI(coalesce(
 					System.getenv("HEROKU_POSTGRESQL_GOLD_URL")
 					, System.getenv("HEROKU_POSTGRESQL_TEAL_URL")
-			));
+					));
+			}else {
+				dbUri = new URI(coalesce(
+						System.getenv("HEROKU_POSTGRESQL_GOLD_URL")
+						, System.getenv("DATABASE_URL")
+						));
+			}
+			
+			
 			String jdbc = String.format("jdbc:postgresql://%s?user=%s&password=%s&sslmode=require",
 					dbUri.getHost() + dbUri.getPath(), dbUri.getUserInfo().split(":")[0],
 					dbUri.getUserInfo().split(":")[1]);
