@@ -24,7 +24,7 @@ public class PlayerService {
 					"INSERT INTO bad.\"Player\" (alias, first_name, last_name, gender, player_level, priority_level)"
 							+ "values(?, ?, ?, ?, ?, ?) RETURNING player_id"),
 					new Object[] { p.getAlias(), p.getFirstName(), p.getLastName(), p.getGender(),
-							p.getLevel().getDesc(), p.getPriorityLevel().getDesc() })
+							"MASTER", "HIGH" })
 					.getJSONObject(0);
 			playerId = pgResponse.getString("player_id");
 		} catch (JSONException e) {
