@@ -3,7 +3,38 @@
 DROP DATABASE bad;
 CREATE DATABASE bad;
 
+-- SEQUENCE: 
 
+CREATE SEQUENCE bad."Game_id_seq"
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE bad."Game_id_seq"
+    OWNER TO yusrbhxnkishbk;-- SIT ikkrwhrvxbaphv;
+
+CREATE SEQUENCE bad."Match_id_seq"
+    INCREMENT 1
+    START 32
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE bad."Match_id_seq"
+    OWNER TO yusrbhxnkishbk;-- SIT ikkrwhrvxbaphv;
+    
+CREATE SEQUENCE bad."Player_id_seq"
+    INCREMENT 1
+    START 1
+    MINVALUE 1
+    MAXVALUE 9223372036854775807
+    CACHE 1;
+
+ALTER SEQUENCE bad."Player_id_seq"
+    OWNER TO yusrbhxnkishbk; -- SIT ikkrwhrvxbaphv;
+    
 -- Tables Creation
 
 DROP TABLE bad."Game";
@@ -23,11 +54,6 @@ CREATE TABLE bad."Game_Player"(
 	primary key(game_id, player_id)
 )	
 
-
-
-
-
-
 DROP TABLE Match;
 CREATE TABLE bad."Match"
 (
@@ -44,12 +70,6 @@ player_id character varying(30),
 created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMPTZ)
 
-CREATE TABLE bad."Game"(
-game_id character varying(30) NOT NULL DEFAULT ('BAD'::text || lpad((nextval('bad."Match_id_seq"'::regclass))::text, 15, '0'::text)),
- is_active Boolean,
-	que_master  character varying(30),
-created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
-	updated_at TIMESTAMPTZ);
 	
 DROP TABLE bad."Player";
 CREATE TABLE bad."Player"(

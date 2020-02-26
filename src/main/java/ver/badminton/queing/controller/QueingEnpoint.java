@@ -39,6 +39,18 @@ public class QueingEnpoint {
 	}
 	
 	@PutMapping(value = "/addPlayers", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public @ResponseBody ResponseEntity<String> addPlayers(@RequestBody Player player) {
+		
+			String playerId = pService.createPlayer(player);
+	
+		if(player.getPlayerId() != null) {
+			return ResponseEntity.status(HttpStatus.ACCEPTED).body("Succesfully Added! Player ID: " + playerId);
+		}else {
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("Got Error upon Adding Player!");
+		}
+	}
+	
+	@PutMapping(value = "/addPlayersInGame", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<String> addPlayers(@RequestParam String gameId, @RequestBody Player player) {
 		
 		if(player.getPlayerId() != null && !"".equals(player.getPlayerId())) {
@@ -52,7 +64,7 @@ public class QueingEnpoint {
 		if(player.getPlayerId() != null) {
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body(gameId+ Util.objToJson(player));
 		}else {
-			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("");
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("Got Error upon Adding Player in Game!");
 		}
 	}
 	
