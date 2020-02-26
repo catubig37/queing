@@ -33,7 +33,7 @@ public class PlayerService {
 			e.printStackTrace();
 		}
 		
-		p.setPlayerId(null);
+		p.setPlayerId(playerId);
 		return playerId;
 	}
 	
