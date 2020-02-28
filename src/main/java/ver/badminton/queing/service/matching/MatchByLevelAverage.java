@@ -7,7 +7,7 @@ import ver.badminton.queing.helper.PlayerLevel;
 import ver.badminton.queing.model.Match;
 import ver.badminton.queing.model.Player;
 
-public class MatchByLevelPercentage implements Matching{
+public class MatchByLevelAverage implements Matching{
 
 
 	@Override

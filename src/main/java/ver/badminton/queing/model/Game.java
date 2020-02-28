@@ -6,7 +6,9 @@ public class Game {
 	
 	String gameId;
 	boolean isActive;
-	String date;
+	String gameDate;
+	String createDate;
+	String updatedDate;
 	String queMaster;
 	
 	List<Match> matches;
@@ -36,12 +38,28 @@ public class Game {
 		this.isActive = isActive;
 	}
 
-	public String getDate() {
-		return date;
+	public String getGameDate() {
+		return gameDate;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setGameDate(String gameDate) {
+		this.gameDate = gameDate;
+	}
+
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
+	}
+
+	public String getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(String updatedDate) {
+		this.updatedDate = updatedDate;
 	}
 
 	public String getQueMaster() {

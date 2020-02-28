@@ -42,6 +42,7 @@ CREATE TABLE bad."Game"(
 	game_id character varying(30) NOT NULL DEFAULT ('BAD'::text || lpad((nextval('bad."Match_id_seq"'::regclass))::text, 15, '0'::text)),
  	is_active Boolean,
 	que_master  character varying(30),
+	game_date TIMESTAMPTZ NOT NULL,
 	created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMPTZ);
 
@@ -54,11 +55,12 @@ CREATE TABLE bad."Game_Player"(
 	primary key(game_id, player_id)
 )	
 
-DROP TABLE Match;
+DROP TABLE bad."Match";
 CREATE TABLE bad."Match"
 (
     match_id character varying(30) NOT NULL DEFAULT ('MATCH'::text || lpad((nextval('bad."Match_id_seq"'::regclass))::text, 15, '0'::text)),
     game_id character varying(30),
+    is_active Boolean,
 	court_number character varying(30) COLLATE pg_catalog."default",
 	created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	updated_at TIMESTAMPTZ)

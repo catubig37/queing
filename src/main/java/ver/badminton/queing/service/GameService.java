@@ -1,7 +1,6 @@
 package ver.badminton.queing.service;
 
 import java.sql.SQLException;
-import java.util.List;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -9,9 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ver.badminton.queing.model.Game;
-import ver.badminton.queing.model.Match;
-import ver.badminton.queing.model.Player;
-import ver.badminton.queing.service.matching.Matching;
 import ver.postgres.PG;
 
 @Service
@@ -27,8 +23,8 @@ public class GameService {
 			pgResponse = PG.Query(
 					String.format("INSERT INTO bad.\"Game\" (is_active, que_master, "
 							+ "created_at, updated_at)"
-							+ "values("+ game.isActive() + ", '" + game.getQueMaster()+"', NOW(), NOW()) RETURNING *"),
-					new Object[] {})
+							+ "values(?, ?, NOW(), NOW()) RETURNING *"),
+					new Object[] {game.isActive(), game.getQueMaster()})
 					.getJSONObject(0);
 			gameID = pgResponse.getString("game_id");
 		} catch (JSONException e) {
@@ -42,6 +38,30 @@ public class GameService {
 		return game;
 	}
 	
+	public Game getGame(String gameId) {
+		JSONObject pgResponse = null;
+		Game game = null;
+		try {
+			pgResponse = PG.Query(
+					String.format("SELECT * FROM bad.\"Game\" where game_id = ?"),
+					new Object[] {gameId})
+					.getJSONObject(0);
+			 game = new Game();
+			 game.setGameId(pgResponse.getString("game_id"));
+			 game.setActive(pgResponse.getBoolean("is_active"));
+			 game.setQueMaster(pgResponse.getString("que_master"));
+			 game.setGameDate(pgResponse.getString("game_date"));
+			 game.setCreateDate(pgResponse.getString("created_at"));
+			 game.setUpdatedDate(pgResponse.getString("updated_at"));
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		return game;
+	}
 	public String addGamePlayer(String gameId, String playerId) {
 		JSONObject pgResponse = null;
 		try {
@@ -59,21 +79,11 @@ public class GameService {
 		if (pgResponse != null)
 			return "Player Added To Game: " + gameId;
 		
-		return "Invalid Player Possible its already Existin Game:" + gameId;
+		return "Invalid Player Possible its already Existing Game:" + gameId;
 	}
 
-	public Match getMatch(String gameId) {
-		Match match = null;
-		List<Player> players = playerService.getPlayers(gameId);
-		if (players != null && players.size() > 3) {
-			for (Matching matching : Matching.getMatching()) {
-				match = matching.getMatch(players);
-				if (match != null)
-					return match;
-			}
-		}
-		return match;
-	}
+	
+	
 //	public static void main(String[] args) {
 //		QueService s = new QueService();
 //

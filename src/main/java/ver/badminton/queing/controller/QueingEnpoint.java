@@ -16,6 +16,7 @@ import ver.badminton.queing.model.Game;
 import ver.badminton.queing.model.Match;
 import ver.badminton.queing.model.Player;
 import ver.badminton.queing.service.GameService;
+import ver.badminton.queing.service.MatchService;
 import ver.badminton.queing.service.PlayerService;
 
 @RestController
@@ -25,7 +26,10 @@ public class QueingEnpoint {
 	GameService gameService;
 	
 	@Autowired
-	PlayerService pService;
+	PlayerService playerService;
+	
+	@Autowired
+	MatchService matchService;
 	
 	@GetMapping("/")
 	public String welcome(){
@@ -41,7 +45,7 @@ public class QueingEnpoint {
 	@PutMapping(value = "/addPlayers", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public @ResponseBody ResponseEntity<String> addPlayers(@RequestBody Player player) {
 		
-			String playerId = pService.createPlayer(player);
+			String playerId = playerService.createPlayer(player);
 	
 		if(player.getPlayerId() != null) {
 			return ResponseEntity.status(HttpStatus.ACCEPTED).body("Succesfully Added! Player ID: " + playerId);
@@ -56,7 +60,7 @@ public class QueingEnpoint {
 		if(player.getPlayerId() != null && !"".equals(player.getPlayerId())) {
 			gameService.addGamePlayer(gameId, player.getPlayerId());
 		} else {
-			String playerId = pService.createPlayer(player);
+			String playerId = playerService.createPlayer(player);
 			gameService.addGamePlayer(gameId, playerId);
 			
 		}
@@ -70,9 +74,20 @@ public class QueingEnpoint {
 	
 	@GetMapping("/getMatch")
 	public @ResponseBody ResponseEntity<String>  getMatch(@RequestParam String gameID){
-		Match match = gameService.getMatch(gameID);
+		Match match = matchService.getMatch(gameID);
 		return ResponseEntity.status(HttpStatus.CREATED)
 		          .body(Util.objToJson(match));
+	}
+	
+	@PutMapping("/queMatch")
+	public @ResponseBody ResponseEntity<String>  queMatch(@RequestParam String gameID, @RequestBody Match match){
+		String matchId = matchService.queMatch(gameID, match);
+		if(matchId != null) {
+		return ResponseEntity.status(HttpStatus.CREATED)
+		          .body("Successfully Added Match: " + matchId);
+		}else {
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).body("Got Error upon Adding a Match!");
+		}
 	}
 	
 	@GetMapping(value = "/getPlayers", consumes = MediaType.APPLICATION_JSON_VALUE)

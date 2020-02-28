@@ -3,6 +3,7 @@ package ver.badminton.queing.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import ver.badminton.queing.helper.PlayerLevel;
+import ver.badminton.queing.helper.PlayerStatus;
 import ver.badminton.queing.helper.PriorityLevel;
 import ver.badminton.queing.service.matching.helper.Util;
 
@@ -34,7 +35,11 @@ public class Player {
 	
 	@JsonProperty("updated_at")
 	private String updatedAt;
-
+	
+	
+	@JsonProperty("player_status")
+	private PlayerStatus inGame;
+	
 	public static void main(String[] args) {
 		System.out.println(Util.objToJson(new Player()));
 	}
@@ -119,4 +124,11 @@ public class Player {
 		this.updatedAt = updatedAt;
 	}
 
+	public PlayerStatus getInGame() {
+		return inGame;
+	}
+
+	public void setInGame(PlayerStatus inGame) {
+		this.inGame = inGame;
+	}
 }
