@@ -37,9 +37,9 @@ public class QueingEnpoint {
 	}
 	
 	@PutMapping("/createGame")
-	public ResponseEntity<String> createGame(@RequestBody Game game){		
+	public ResponseEntity<Game> createGame(@RequestBody Game game){		
 		return ResponseEntity.status(HttpStatus.CREATED)
-		          .body(Util.objToJson(gameService.createGame(game)));
+		          .body(gameService.createGame(game));
 	}
 	
 	@PutMapping(value = "/addPlayers", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -73,10 +73,10 @@ public class QueingEnpoint {
 	}
 	
 	@GetMapping("/getMatch")
-	public @ResponseBody ResponseEntity<String>  getMatch(@RequestParam String gameID){
+	public @ResponseBody ResponseEntity<Match>  getMatch(@RequestParam String gameID){
 		Match match = matchService.getMatch(gameID);
 		return ResponseEntity.status(HttpStatus.CREATED)
-		          .body(Util.objToJson(match));
+		          .body(match);
 	}
 	
 	@PutMapping("/queMatch")

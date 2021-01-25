@@ -10,6 +10,7 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import ver.badminton.queing.helper.PlayerLevel;
+import ver.badminton.queing.helper.PlayerStatus;
 import ver.badminton.queing.helper.PriorityLevel;
 import ver.badminton.queing.model.Player;
 import ver.postgres.PG;
@@ -79,6 +80,7 @@ public class PlayerService {
 				player.setGender(obj.get("gender").toString());
 				player.setCreatedAt(obj.get("created_at").toString());
 				player.setUpdatedAt(obj.get("updated_at").toString());
+				player.setInGame(PlayerStatus.getStatus(obj.get("player_level").toString()));//TODO DB value
 				players.add(player);
 				
 			}

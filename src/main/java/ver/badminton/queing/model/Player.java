@@ -36,7 +36,6 @@ public class Player {
 	@JsonProperty("updated_at")
 	private String updatedAt;
 	
-	
 	@JsonProperty("player_status")
 	private PlayerStatus inGame;
 	
