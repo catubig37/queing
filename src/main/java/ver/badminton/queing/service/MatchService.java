@@ -6,13 +6,14 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import ver.badminton.queing.model.Match;
 import ver.badminton.queing.model.Player;
 import ver.badminton.queing.service.matching.Matching;
 import ver.postgres.PG;
 
+@Service
 public class MatchService {
 	
 	@Autowired
